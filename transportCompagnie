@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>UrbanSkyRoute - Gestion des Trajets</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,700,700i&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="assets/css/style.css" rel="stylesheet">
+  <style>
+    .champ-vide {
+      border: 1px solid red;
+    }
+  
+    /* Styles pour la liste des transports */
+    #listeTransport {
+      margin-top: 50px;
+    }
+  
+    #listeTransport h1 {
+      color: #151111;
+      font-size: 30px;
+      margin-top: 10px;
+      margin-bottom: 20px;
+    }
+  
+    #listeTransport table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #f7f7f7;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      padding: 20px;
+    }
+  
+    #listeTransport th {
+      background-color: #34495e;
+      color: #fff;
+      font-weight: bold;
+      padding: 10px;
+      text-align: center;
+      box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+    }
+  
+    #listeTransport td {
+      padding: 10px;
+      text-align: center;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+  
+    #listeTransport button {
+      display: inline-block;
+      background-color: #34495e;
+      border: 2px solid #2c3e50;
+      color: #ffffff;
+      padding: 10px 20px;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      font-size: 14px;
+      margin-right: 5px;
+    }
+  
+    #listeTransport table {
+      white-space: nowrap;
+    }
+  
+    #listeTransport button:focus {
+      animation: pulse 1s ease infinite;
+    }
+  
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.1);
+      }
+    }
+  
+    #listeTransport button:hover {
+      background-color: rgb(91, 133, 177);
+    }
+  </style>
+<style>
+    .modalAjoutTransport,
+    .modalModifTransport {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      z-index: 1000;
+      height: 300px;
+      width: 300px;
+      max-width: 100%;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+  
+    .modalAjoutTransport h2,
+    .modalModifTransport h2 {
+      color: #151111;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+  
+    .modalAjoutTransport label,
+    .modalModifTransport label {
+      display: block;
+      margin-bottom: 5px;
+    }
+  
+    .modalAjoutTransport input,
+    .modalModifTransport input {
+      width: calc(100% - 20px);
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+  
+    .modalAjoutTransport .buttons,
+    .modalModifTransport .buttons {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  
+    .modalAjoutTransport button,
+    .modalModifTransport button {
+      background-color: #34495e;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+  
+    .modalAjoutTransport button:hover,
+    .modalModifTransport button:hover {
+      background-color: rgb(91, 133, 177);
+    }
+  
+    .modalAjoutTransport .cancel-btn,
+    .modalModifTransport .cancel-btn {
+      background-color: #ccc;
+      color: #fff;
+    }
+  </style>
+    
+</head>
+
+  <body>
+    <header id="header" class="fixed-top d-flex align-items-center">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div class="logo">
+                <h1 class="text-light"><span>UrbanSky Route</span></h1>
+            </div>
+            <nav id="navbar" class="navbar">
+                <ul>
+                    <li><a href="index3.html">Home</a></li>
+                    <li><a href="index.html">Déconnexion</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header><!-- End Header -->
+<!-- Liste des transports Section -->
+<section id="listeTransport" class="listeTransport">
+    <div class="container">
+      <h1>Liste des Transports</h1>
+      <table border="1">
+        <tr>
+          <th>Type de Transport</th>
+          <th>Nombre de Passagers</th>
+          <th>Actions</th>
+        </tr>
+        <tr>
+          <td>Train</td>
+          <td>50</td>
+          <td>
+            <button onclick="modifierTransport()">Modifier</button>
+            <button onclick="supprimerTransport()">Supprimer</button>
+          </td>
+        </tr>
+        <!-- Ajoutez d'autres lignes de transport selon votre logique -->
+      </table>
+      <button onclick="ajouterTransport()">Ajouter un Transport</button>
+    </div>
+  </section>
+  
+  <!-- Fenêtre modale d'ajout de transport -->
+  <div class="modalAjoutTransport" id="modalAjoutTransport">
+    <h2>Ajouter un transport</h2>
+    <form>
+      <label for="typeTransport-ajout">Type de transport:</label>
+      <input type="text" id="typeTransport-ajout" required>
+  
+      <label for="nombrePassagers-ajout">Nombre de passagers:</label>
+      <input type="number" id="nombrePassagers-ajout" required>
+  
+      <div class="buttons">
+        <button type="button" onclick="sauvegarderAjoutTransport()">Enregistrer</button>
+        <button type="button" class="cancel-btn" onclick="annulerAjoutTransport()">Annuler</button>
+      </div>
+    </form>
+  </div>
+  
+  <!-- Fenêtre modale de modification de transport -->
+  <div class="modalModifTransport" id="modalModifTransport">
+    <h2>Modifier le transport</h2>
+    <form>
+      <label for="typeTransport-modifier">Type de transport:</label>
+      <input type="text" id="typeTransport-modifier" required>
+  
+      <label for="nombrePassagers-modifier">Nombre de passagers:</label>
+      <input type="number" id="nombrePassagers-modifier" required>
+  
+      <div class="buttons">
+        <button type="button" onclick="sauvegarderModificationTransport()">Enregistrer</button>
+        <button type="button" class="cancel-btn" onclick="annulerModificationTransport()">Annuler</button>
+      </div>
+    </form>
+  </div>
+  
+  <script>
+    function ajouterTransport() {
+      document.getElementById('modalAjoutTransport').style.display = 'block';
+    }
+  
+    function sauvegarderAjoutTransport() {
+      var typeTransport = document.getElementById('typeTransport-ajout').value;
+      var nombrePassagers = parseInt(document.getElementById('nombrePassagers-ajout').value, 10);
+  
+      // Retirer la classe 'champ-vide' de tous les champs
+      var champs = [document.getElementById('typeTransport-ajout')];
+      champs.forEach(function (champ) {
+        champ.classList.remove('champ-vide');
+      });
+  
+      // Vérifications des données
+      if (!typeTransport || isNaN(nombrePassagers) || nombrePassagers < 0) {
+        alert("Veuillez remplir tous les champs correctement.");
+  
+        // Ajouter la classe 'champ-vide' aux champs vides
+        champs.forEach(function (champ) {
+          if (!champ.value.trim()) {
+            champ.classList.add('champ-vide');
+          }
+        });
+  
+        return;
+      }
+  
+      // Appliquer les modifications au transport (vous devrez implémenter cette logique)
+      document.getElementById('modalAjoutTransport').style.display = 'none';
+      alert("L'ajout a été enregistré avec succès!");
+    }
+  
+    function modifierTransport(transportId) {
+      // Code pour récupérer les détails du transport avec transportId
+      var transport = {
+        typeTransport: "Type de transport initial",
+        nombrePassagers: 3
+      };
+      // Remplacez les valeurs ci-dessus par celles que vous obtenez du transport avec transportId
+      afficherFenetreModaleModif(transport);
+    }
+  
+    function afficherFenetreModaleModif(transport) {
+      // Remplissez le formulaire dans la fenêtre modale avec les détails du transport
+      document.getElementById('typeTransport-modifier').value = transport.typeTransport;
+      document.getElementById('nombrePassagers-modifier').value = transport.nombrePassagers;
+      document.getElementById('modalModifTransport').style.display = 'block';
+    }
+  
+    function sauvegarderModificationTransport() {
+      // Récupérer les valeurs du formulaire dans la fenêtre modale
+      var typeTransport = document.getElementById('typeTransport-modifier').value;
+      var nombrePassagers = parseInt(document.getElementById('nombrePassagers-modifier').value, 10);
+  
+      // Retirer la classe 'champ-vide' de tous les champs
+      var champs = [document.getElementById('typeTransport-modifier')];
+      champs.forEach(function (champ) {
+        champ.classList.remove('champ-vide');
+      });
+  
+      // Vérifications des données
+      if (!typeTransport || isNaN(nombrePassagers) || nombrePassagers < 0) {
+        alert("Veuillez remplir tous les champs correctement.");
+  
+        // Ajouter la classe 'champ-vide' aux champs vides
+        champs.forEach(function (champ) {
+          if (!champ.value.trim()) {
+            champ.classList.add('champ-vide');
+          }
+        });
+  
+        return;
+      }
+  
+      // Appliquer les modifications au transport (vous devrez implémenter cette logique)
+      document.getElementById('modalModifTransport').style.display = 'none';
+      alert("Les modifications ont été enregistrées avec succès!");
+    }
+  
+    function annuler() {
+      document.getElementById('modalModifTransport').style.display = 'none';
+      document.getElementById('modalAjoutTransport').style.display = 'none';
+    }
+  
+    function supprimerTransport(transportId) {
+      // Confirmation de la suppression
+      var confirmation = confirm("Êtes-vous sûr de vouloir supprimer ce transport ?");
+      if (confirmation) {
+        // Code pour supprimer le transport avec transportId
+        alert("Transport supprimé avec l'ID " + transportId);
+      }
+    }
+  </script>
+  
+  
+
+ <!-- ======= Footer ======= -->
+ <footer id="footer">
+    <div class="footer-newsletter">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6">
+            <h4>Notre Newsletter</h4>
+            <p>Restez informé des dernières actualités et offres d'Urban Skyroute.</p>
+          </div>
+          <div class="col-lg-6">
+            <form action="" method="post">
+              <input type="email" name="email" placeholder="Votre adresse e-mail"><input type="submit" value="S'abonner">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3 col-md-6 footer-links">
+            <h4>Liens Utiles</h4>
+            <ul>
+              <li><a class="active" href="index.html">Accueil</a></li>
+              <li><a href="about.html">Connexion/Inscription</a></li>
+              <li><a href="team.html">Compagnie</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </div>
+  
+          <div class="col-lg-3 col-md-6 footer-links">
+            <h4>Nos Services</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Voyages Confortables</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Horaires Flexibles</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Tarifs Compétitifs</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Expérience Inoubliable</a></li>
+            </ul>
+          </div>
+  
+          <div class="col-lg-3 col-md-6 footer-contact">
+            <h4>Contactez-nous</h4>
+            <p>
+              123 Rue des Voyageurs <br>
+              Alger, 16000<br>
+              Algérie <br><br>
+              <strong>Téléphone:</strong> +213 123 456 789<br>
+              <strong>Email:</strong> info@urbanskyroute.com<br>
+            </p>
+          </div>
+  
+          <div class="col-lg-3 col-md-6 footer-info">
+            <h3>À Propos d'Urban Skyroute</h3>
+            <p>Urban Skyroute est votre compagnie de transport préférée pour des voyages confortables et abordables. Rejoignez-nous pour une expérience de voyage exceptionnelle.</p>
+            <div class="social-links mt-3">
+              <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+              <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+              <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+              <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="container">
+      <div class="copyright">
+        &copy; Droits d'auteur <strong><span>Urban Skyroute</span></strong>. Tous droits réservés
+      </div>
+      <div class="credits">
+        <!-- Tous les liens dans le footer doivent rester intacts. -->
+        <!-- Vous pouvez supprimer les liens uniquement si vous avez acheté la version Pro. -->
+        <!-- Informations de licence : https://bootstrapmade.com/license/ -->
+        <!-- Achetez la version Pro avec un formulaire de contact PHP/AJAX fonctionnel : https://bootstrapmade.com/free-bootstrap-template-corporate-moderna/ -->
+        Conçu par <a href="https://bootstrapmade.com/">KouiKoui et CheChe</a>
+      </div>
+    </div>
+  </footer>
+  <!-- End Footer -->
+  
+  
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  
+    <!-- Vendor JS Files -->
+    <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+    <script src="assets/vendor/aos/aos.js"></script>
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
+    <script src="assets/vendor/php-email-form/validate.js"></script>
+  
+    <!-- Template Main JS File -->
+    <script src="assets/js/main.js"></script>
+
+</body>
+</html>
