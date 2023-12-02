@@ -79,14 +79,10 @@
         <div class="logo">
           <h1 class="text-light"><span>UrbanSky Route</span></h1>
         </div>
-        <nav id="navbar" class="navbar">
-          <ul>
-            <li><a href="index-2.html">Home</a></li>
-            <li><a href="profil.html">profil</a></li>
-            <li><a href="listtrips.html">Mes Trajets</a></li>
-            <li><a href="index.html">Déconnexion</a></li>
-          </ul>
-        </nav>
+        <?php
+      include('navConnecte.php');
+      //<!-- .navbar -->
+      ?>
       </div>
     </header><!-- End Header -->
     <div class="container">
@@ -116,7 +112,7 @@
                         <label for="date">Date de Voyage</label>
                         <input type="date" id="date" name="date" required>
                     </div>
-                    <button type="submit"><a href="trajet.html">Rechercher le trajet</a></button>
+                    <button type="submit"><a href="resultatRecherche.php">Rechercher le trajet</a></button>
                 </form>
             </div>
             
@@ -139,6 +135,26 @@
       // Appel à la fonction d'initialisation de la carte au chargement de la page
       google.maps.event.addDomListener(window, "load", initMap);
     </script>
+  <script>
+     $(document).ready(function() {
+
+       var dateInput = $('#date');
+      var today = new Date();
+      var formattedToday = getFormattedDate(today);
+      dateInput.attr('min', formattedToday);
+
+     function getFormattedDate(date) {
+        var year = date.getFullYear();
+        var month = ('0' + (date.getMonth() + 1)).slice(-2);
+        var day = ('0' + date.getDate()).slice(-2);
+        return year + '-' + month + '-' + day;
+         }
+         });
+   </script>
+<?php
+      include('footer.php');
+      //<!-- .navbar -->
+      ?>
 
 </body>
 </html>

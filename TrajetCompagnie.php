@@ -107,12 +107,10 @@ button:hover {
             <div class="logo">
                 <h1 class="text-light"><span>UrbanSky Route</span></h1>
             </div>
-            <nav id="navbar" class="navbar">
-                <ul>
-                    <li><a href="index3.html">Home</a></li>
-                    <li><a href="index.html">Déconnexion</a></li>
-                </ul>
-            </nav>
+            <?php
+      include('navConnecte.php');
+      //<!-- .navbar -->
+      ?>
         </div>
     </header><!-- End Header -->
 
@@ -187,87 +185,120 @@ button:hover {
       </script>
     </div>
   </section>
+  <script>
+   function ajouterTrajet() {
+           document.getElementById('modalAjout').style.display = 'block';
+        }
+        function sauvegarderAjout() {
+    // Récupérer les valeurs du formulaire dans la fenêtre modale
+    var depart = document.getElementById('depart-ajout');
+    var arrivee = document.getElementById('arrivee-ajout');
+    var typeTransport = document.getElementById('typeTransport-ajout');
+    var heureDepart = document.getElementById('heureDepart-ajout');
+    var heureArrivee = document.getElementById('heureArrivee-ajout');
+    var nombrePassagers = parseInt(document.getElementById('nombrePassagers-ajout').value, 10);
 
- <!-- ======= Footer ======= -->
- <footer id="footer">
-    <div class="footer-newsletter">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-6">
-            <h4>Notre Newsletter</h4>
-            <p>Restez informé des dernières actualités et offres d'Urban Skyroute.</p>
-          </div>
-          <div class="col-lg-6">
-            <form action="" method="post">
-              <input type="email" name="email" placeholder="Votre adresse e-mail"><input type="submit" value="S'abonner">
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
+    // Retirer la classe 'champ-vide' de tous les champs
+    var champs = [depart, arrivee, typeTransport, heureDepart, heureArrivee];
+    champs.forEach(function(champ) {
+      champ.classList.remove('champ-vide');
+    });
+
+    // Vérifications des données
+    if (!depart.value || !arrivee.value || !typeTransport.value || !heureDepart.value || !heureArrivee.value || isNaN(nombrePassagers) || nombrePassagers < 0) {
+      alert("Veuillez remplir tous les champs correctement.");
+
+      // Ajouter la classe 'champ-vide' aux champs vides
+      champs.forEach(function(champ) {
+        if (!champ.value.trim()) {
+          champ.classList.add('champ-vide');
+        }
+      });
+
+      return;
+    }
+
+    // Appliquer les modifications au trajet (vous devrez implémenter cette logique)
+    document.getElementById('modalAjout').style.display = 'none';
+    alert("L'ajout a été enregistré avec succès!");
+  }
+        function modifierTrajet(trajetId) {
+          var trajet = {
+              depart: "Point de départ initial",
+              arrivee: "Point d'arrivée initial",
+              typeTransport: "Type de transport initial",
+              heureDepart: "Heure de départ initial",
+              heureArrivee: "Heure d'arrivée initial",
+              nombrePassagers: 3
+            };
+              // Remplacez les valeurs ci-dessus par celles que vous obtenez du trajet avec trajetId
+            afficherFenetreModale(trajet);
+          }
+
+        function afficherFenetreModale(trajet) {
+           // Remplissez le formulaire dans la fenêtre modale avec les détails du trajet
+          document.getElementById('depart-modifier').value = trajet.depart;
+          document.getElementById('arrivee-modifier').value = trajet.arrivee;
+          document.getElementById('typeTransport-modifier').value = trajet.typeTransport;
+          document.getElementById('heureDepart-modifier').value = trajet.heureDepart;
+          document.getElementById('heureArrivee-modifier').value = trajet.heureArrivee;
+          document.getElementById('nombrePassagers-modifier').value = trajet.nombrePassagers;
+           document.getElementById('modalModif').style.display = 'block';
+          }
+
+  function sauvegarderModification() {
+    // Récupérer les valeurs du formulaire dans la fenêtre modale
+    var depart = document.getElementById('depart-modifier').value;
+    var arrivee = document.getElementById('arrivee-modifier').value;
+    var typeTransport = document.getElementById('typeTransport-modifier').value;
+    var heureDepart = document.getElementById('heureDepart-modifier').value;
+    var heureArrivee = document.getElementById('heureArrivee-modifier').value;
+    var nombrePassagers = parseInt(document.getElementById('nombrePassagers-modifier').value, 10);
+
+    // Vérifications des données
+    if (isNaN(nombrePassagers) || nombrePassagers < 0) {
+      alert("Le nombre de passagers doit être un entier positif.");
+      return;
+    }
+
+    if (heureArrivee <= heureDepart) {
+      alert("L'heure d'arrivée doit être supérieure à l'heure de départ.");
+      return;
+    }
+
+    // Appliquer les modifications au trajet (vous devrez implémenter cette logique)
+    // ...
+
+    // Cacher la fenêtre modale après avoir appliqué les modifications
+    document.getElementById('modalModif').style.display = 'none';
+
+    // Afficher un message ou effectuer d'autres actions si nécessaire
+    alert("Les modifications ont été enregistrées avec succès!");
+  }
+
   
-    <div class="footer-top">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-3 col-md-6 footer-links">
-            <h4>Liens Utiles</h4>
-            <ul>
-              <li><a class="active" href="index.html">Accueil</a></li>
-              <li><a href="about.html">Connexion/Inscription</a></li>
-              <li><a href="team.html">Compagnie</a></li>
-              <li><a href="contact.html">Contact</a></li>
-            </ul>
-          </div>
+  function annuler() {
+  document.getElementById('modalModif').style.display = 'none';
+  document.getElementById('modalAjout').style.display = 'none';
+}
+
+// Fonction de suppression
+function supprimerTrajet(trajetId) {
+  var confirmation = confirm("Êtes-vous sûr de vouloir supprimer ce trajet ?");
   
-          <div class="col-lg-3 col-md-6 footer-links">
-            <h4>Nos Services</h4>
-            <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Voyages Confortables</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Horaires Flexibles</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Tarifs Compétitifs</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Expérience Inoubliable</a></li>
-            </ul>
-          </div>
-  
-          <div class="col-lg-3 col-md-6 footer-contact">
-            <h4>Contactez-nous</h4>
-            <p>
-              123 Rue des Voyageurs <br>
-              Alger, 16000<br>
-              Algérie <br><br>
-              <strong>Téléphone:</strong> +213 123 456 789<br>
-              <strong>Email:</strong> info@urbanskyroute.com<br>
-            </p>
-          </div>
-  
-          <div class="col-lg-3 col-md-6 footer-info">
-            <h3>À Propos d'Urban Skyroute</h3>
-            <p>Urban Skyroute est votre compagnie de transport préférée pour des voyages confortables et abordables. Rejoignez-nous pour une expérience de voyage exceptionnelle.</p>
-            <div class="social-links mt-3">
-              <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-              <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-              <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-              <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  
-    <div class="container">
-      <div class="copyright">
-        &copy; Droits d'auteur <strong><span>Urban Skyroute</span></strong>. Tous droits réservés
-      </div>
-      <div class="credits">
-        <!-- Tous les liens dans le footer doivent rester intacts. -->
-        <!-- Vous pouvez supprimer les liens uniquement si vous avez acheté la version Pro. -->
-        <!-- Informations de licence : https://bootstrapmade.com/license/ -->
-        <!-- Achetez la version Pro avec un formulaire de contact PHP/AJAX fonctionnel : https://bootstrapmade.com/free-bootstrap-template-corporate-moderna/ -->
-        Conçu par <a href="https://bootstrapmade.com/">KouiKoui et CheChe</a>
-      </div>
-    </div>
-  </footer>
-  <!-- End Footer -->
+  if (confirmation) {
+    alert("Trajet avec l'ID " + trajetId + " supprimé !");
+  } else {
+    alert("Suppression annulée.");
+  }
+}
+
+
+</script>
+  <?php
+      include('footer.php');
+      //<!-- .navbar -->
+      ?>
   
   
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>

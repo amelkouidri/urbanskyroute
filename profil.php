@@ -40,13 +40,10 @@
         <h1 class="text-light"><span>UrbanSky Route</span></h1>
       </div>
 
-      <nav id="navbar" class="navbar">
-        <ul>
-          <li><a class="" href="index-2.html">Home</a></li>
-          <li><a href="RechercheTrajet.html">Mes Trajets</a></li>
-          <li><a href="index.html">Déconnexion</a></li>
-        </ul>
-      </nav><!-- .navbar -->
+      <?php
+      include('navConnecte.php');
+      //<!-- .navbar -->
+      ?>
 
     </div>
   </header><!-- End Header -->
@@ -78,7 +75,7 @@
                 <h4>Bio</h4>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque eu metus nec velit fermentum
                   accumsan. Nunc quis ultrices eros.</p>
-                <a href="edit-profile.html" class="btn btn-primary">Edit Profile</a>
+                <a href="profil.php" class="btn btn-primary">Edit Profile</a>
               </div>
 
               
@@ -91,17 +88,10 @@
 
   </main><!-- End #main -->
 
-  <!-- ======= Footer ======= -->
-  <footer id="footer" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
-    <div class="container">
-      <div class="copyright">
-        &copy; Copyright <strong><span>UrbanSky Route</span></strong>. All Rights Reserved
-      </div>
-      <div class="credits">
-        Designed by <a href="https://urbanskyroute.com/">Your Name</a>
-      </div>
-    </div>
-  </footer><!-- End Footer -->
+  <?php
+      include('footer.php');
+      //<!-- .navbar -->
+      ?>
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
