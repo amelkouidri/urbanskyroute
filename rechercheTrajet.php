@@ -110,9 +110,6 @@
                         <label for="date">Date de Voyage</label>
                         <input type="date" id="date" name="date" required>
                     </div>
-<<<<<<< HEAD:rechercheTrajet.php
-                    <button type="submit"><a href="resultatRecherche.php">Rechercher le trajet</a></button>
-=======
                     
                     <script>
                         $(document).ready(function() {
@@ -134,7 +131,6 @@
                     </html>
                     
                     <button type="submit" id="recherchetrajet"><a href="trajet.html">Rechercher le trajet</a></button>
->>>>>>> 213b2d559553737d7d3b02f4389db9ae87ff10db:RechercheTrajet.html
                 </form>
             </div>
             
