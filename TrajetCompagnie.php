@@ -25,14 +25,82 @@
   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
   <link href="assets/css/style.css" rel="stylesheet">
-
+  
   <style>
-    h1 {
+   .champ-vide {
+    border: 1px solid red;
+  }
+  </style>
+  <style>
+  .modalModif, .modalAjout {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    z-index: 1000;
+    height: 630px;
+    width: 550px;
+    max-width: 100%;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .modalModif h2, .modalAjout h2 {
     color: #151111;
-    font-size: 30px;
-    margin-top: 100px; 
-    margin-left: 10px;
-}
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .modalModif label, .modalAjout label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .modalModif select, .modalAjout select,
+  .modalModif input, .modalAjout input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  
+  .modalModif .buttons, .modalAjout .buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .modalModif button, .modalAjout button {
+    background-color: #34495e;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .modalModif button:hover, .modalAjout button:hover {
+    background-color: rgb(91, 133, 177);
+  }
+  
+  .modalModif .cancel-btn, .modalAjout .cancel-btn {
+    background-color: #ccc;
+    color: #fff;
+  }
+  
+    /* Styles pour la liste des trajets */
+    h1 {
+      color: #151111;
+      font-size: 30px;
+      margin-top: 100px;
+      margin-left: 10px;
+    }
 
 table {
   width: 100%;
@@ -90,14 +158,9 @@ button:focus {
     transform: scale(1.1);
   }
 }
-
-
-
 button:hover {
   background-color: rgb(91, 133, 177);
 }
-
-
   </style>
 </head>
 
@@ -167,23 +230,182 @@ button:hover {
       </table>
       <button onclick="ajouterTrajet()">Ajouter un Trajet</button>
 
-      <script>
-          function modifierTrajet(trajetId) {
-              // Code pour modifier le trajet
-              alert("Modifier le trajet avec l'ID " + trajetId);
-          }
+  <!-- Ajoutez une fenêtre modale pour la modification -->
+  <div class="modalModif" id="modalModif">
+    <h2>Modifier le trajet</h2>
+    <form>
+      <label for="depart-modifier">Point de départ:</label>
+      <select id="depart-modifier" required>
+        <!-- Ajoutez vos options ici -->
+      </select>
   
-          function supprimerTrajet(trajetId) {
-              // Code pour supprimer le trajet
-              alert("Supprimer le trajet avec l'ID " + trajetId);
-          }
+      <label for="arrivee-modifier">Point d'arrivée:</label>
+      <select id="arrivee-modifier" required>
+        <!-- Ajoutez vos options ici -->
+      </select>
   
-          function ajouterTrajet() {
-              // Code pour ajouter un nouveau trajet
-              alert("Ajouter un nouveau trajet");
-          }
-      </script>
+      <label for="typeTransport-modifier">Type de transport:</label>
+      <input type="text" id="typeTransport-modifier" required>
+  
+      <label for="heureDepart-modifier">Heure de départ:</label>
+      <input type="time" id="heureDepart-modifier" required>
+  
+      <label for="heureArrivee-modifier">Heure d'arrivée:</label>
+      <input type="time" id="heureArrivee-modifier" required>
+  
+      <label for="nombrePassagers-modifier">Nombre de passagers:</label>
+      <input type="number" id="nombrePassagers-modifier" required>
+  
+      <div class="buttons">
+        <button type="button" onclick="sauvegarderModification()">Enregistrer</button>
+        <button type="button" class="cancel-btn" onclick="annuler()">Annuler</button>
+      </div>
+    </form>
+  </div>
+
+ <!-- Ajoutez une fenêtre modale pour l'ajout -->
+<div class="modalAjout" id="modalAjout">
+  <h2>Ajouter un trajet</h2>
+  <form>
+    <label for="depart-ajout">Point de départ:</label>
+    <select id="depart-ajout" required>
+      <!-- Ajoutez vos options ici -->
+    </select>
+
+    <label for="arrivee-ajout">Point d'arrivée:</label>
+    <select id="arrivee-ajout" required>
+      <!-- Ajoutez vos options ici -->
+    </select>
+
+    <label for="typeTransport-ajout">Type de transport:</label>
+    <input type="text" id="typeTransport-ajout" required>
+
+    <label for="heureDepart-ajout">Heure de départ:</label>
+    <input type="time" id="heureDepart-ajout" required>
+
+    <label for="heureArrivee-ajout">Heure d'arrivée:</label>
+    <input type="time" id="heureArrivee-ajout" required>
+
+    <label for="nombrePassagers-ajout">Nombre de passagers:</label>
+    <input type="number" id="nombrePassagers-ajout" required>
+
+    <div class="buttons">
+      <button type="button" onclick="sauvegarderAjout()">Enregistrer</button>
+      <button type="button" class="cancel-btn" onclick="annuler()">Annuler</button>
     </div>
+  </form>
+</div>
+
+<script>
+   function ajouterTrajet() {
+           document.getElementById('modalAjout').style.display = 'block';
+        }
+        function sauvegarderAjout() {
+    // Récupérer les valeurs du formulaire dans la fenêtre modale
+    var depart = document.getElementById('depart-ajout');
+    var arrivee = document.getElementById('arrivee-ajout');
+    var typeTransport = document.getElementById('typeTransport-ajout');
+    var heureDepart = document.getElementById('heureDepart-ajout');
+    var heureArrivee = document.getElementById('heureArrivee-ajout');
+    var nombrePassagers = parseInt(document.getElementById('nombrePassagers-ajout').value, 10);
+
+    // Retirer la classe 'champ-vide' de tous les champs
+    var champs = [depart, arrivee, typeTransport, heureDepart, heureArrivee];
+    champs.forEach(function(champ) {
+      champ.classList.remove('champ-vide');
+    });
+
+    // Vérifications des données
+    if (!depart.value || !arrivee.value || !typeTransport.value || !heureDepart.value || !heureArrivee.value || isNaN(nombrePassagers) || nombrePassagers < 0) {
+      alert("Veuillez remplir tous les champs correctement.");
+
+      // Ajouter la classe 'champ-vide' aux champs vides
+      champs.forEach(function(champ) {
+        if (!champ.value.trim()) {
+          champ.classList.add('champ-vide');
+        }
+      });
+
+      return;
+    }
+
+    // Appliquer les modifications au trajet (vous devrez implémenter cette logique)
+    document.getElementById('modalAjout').style.display = 'none';
+    alert("L'ajout a été enregistré avec succès!");
+  }
+        function modifierTrajet(trajetId) {
+          var trajet = {
+              depart: "Point de départ initial",
+              arrivee: "Point d'arrivée initial",
+              typeTransport: "Type de transport initial",
+              heureDepart: "Heure de départ initial",
+              heureArrivee: "Heure d'arrivée initial",
+              nombrePassagers: 3
+            };
+              // Remplacez les valeurs ci-dessus par celles que vous obtenez du trajet avec trajetId
+            afficherFenetreModale(trajet);
+          }
+
+        function afficherFenetreModale(trajet) {
+           // Remplissez le formulaire dans la fenêtre modale avec les détails du trajet
+          document.getElementById('depart-modifier').value = trajet.depart;
+          document.getElementById('arrivee-modifier').value = trajet.arrivee;
+          document.getElementById('typeTransport-modifier').value = trajet.typeTransport;
+          document.getElementById('heureDepart-modifier').value = trajet.heureDepart;
+          document.getElementById('heureArrivee-modifier').value = trajet.heureArrivee;
+          document.getElementById('nombrePassagers-modifier').value = trajet.nombrePassagers;
+           document.getElementById('modalModif').style.display = 'block';
+          }
+
+  function sauvegarderModification() {
+    // Récupérer les valeurs du formulaire dans la fenêtre modale
+    var depart = document.getElementById('depart-modifier').value;
+    var arrivee = document.getElementById('arrivee-modifier').value;
+    var typeTransport = document.getElementById('typeTransport-modifier').value;
+    var heureDepart = document.getElementById('heureDepart-modifier').value;
+    var heureArrivee = document.getElementById('heureArrivee-modifier').value;
+    var nombrePassagers = parseInt(document.getElementById('nombrePassagers-modifier').value, 10);
+
+    // Vérifications des données
+    if (isNaN(nombrePassagers) || nombrePassagers < 0) {
+      alert("Le nombre de passagers doit être un entier positif.");
+      return;
+    }
+
+    if (heureArrivee <= heureDepart) {
+      alert("L'heure d'arrivée doit être supérieure à l'heure de départ.");
+      return;
+    }
+
+    // Appliquer les modifications au trajet (vous devrez implémenter cette logique)
+    // ...
+
+    // Cacher la fenêtre modale après avoir appliqué les modifications
+    document.getElementById('modalModif').style.display = 'none';
+
+    // Afficher un message ou effectuer d'autres actions si nécessaire
+    alert("Les modifications ont été enregistrées avec succès!");
+  }
+
+  
+  function annuler() {
+  document.getElementById('modalModif').style.display = 'none';
+  document.getElementById('modalAjout').style.display = 'none';
+}
+
+// Fonction de suppression
+function supprimerTrajet(trajetId) {
+  var confirmation = confirm("Êtes-vous sûr de vouloir supprimer ce trajet ?");
+  
+  if (confirmation) {
+    alert("Trajet avec l'ID " + trajetId + " supprimé !");
+  } else {
+    alert("Suppression annulée.");
+  }
+}
+
+
+</script>
   </section>
   <script>
    function ajouterTrajet() {

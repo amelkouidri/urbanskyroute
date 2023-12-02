@@ -9,6 +9,9 @@
   <meta content="" name="description">
   <meta content="" name="keywords">
 
+  
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
@@ -55,19 +58,14 @@
   
     /* Style pour le bouton de recherche */
     button[type="submit"] {
-      background-color: #007bff;
-      color: #fff;
+      background-color: #1b2c41;
       padding: 10px 20px;
       border: none;
       border-radius: 3px;
       cursor: pointer;
     }
+
   
-    /* Style pour le titre "Recherche de Trajet" */
-    h2 {
-      font-size: 24px;
-      margin-top: 20px;
-    }
   </style>
   
 </head>
@@ -85,7 +83,7 @@
       ?>
       </div>
     </header><!-- End Header -->
-    <div class="container">
+    <div class="container" style="margin-top: 150px;">
         <h2>Recherche de Trajet</h2>
         <div class="row">
             <div class="col-md-4">
@@ -112,7 +110,31 @@
                         <label for="date">Date de Voyage</label>
                         <input type="date" id="date" name="date" required>
                     </div>
+<<<<<<< HEAD:rechercheTrajet.php
                     <button type="submit"><a href="resultatRecherche.php">Rechercher le trajet</a></button>
+=======
+                    
+                    <script>
+                        $(document).ready(function() {
+                            
+                            var dateInput = $('#date');
+                            var today = new Date();
+                            var formattedToday = getFormattedDate(today);
+                            dateInput.attr('min', formattedToday);
+                            
+                            function getFormattedDate(date) {
+                                var year = date.getFullYear();
+                                var month = ('0' + (date.getMonth() + 1)).slice(-2);
+                                var day = ('0' + date.getDate()).slice(-2);
+                                return year + '-' + month + '-' + day;
+                            }
+                        });
+                    </script>
+                    
+                    </html>
+                    
+                    <button type="submit" id="recherchetrajet"><a href="trajet.html">Rechercher le trajet</a></button>
+>>>>>>> 213b2d559553737d7d3b02f4389db9ae87ff10db:RechercheTrajet.html
                 </form>
             </div>
             
@@ -125,12 +147,13 @@
     <!-- Google Maps JavaScript -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmtaQUZuwVQLHpWIx-ry3HmGHnyL2Dkms&libraries=places"></script>
     <script>
-      function initMap() {
-        const map = new google.maps.Map(document.getElementById("map"), {
-          center: { lat: 0, lng: 0 }, // Coordonnées du centre de la carte
-          zoom: 8, // Niveau de zoom initial
-        });
-      }
+     function initMap() {
+    const map = new google.maps.Map(document.getElementById("map"), {
+    center: { lat: 28.0339, lng: 1.6596 }, // Coordonnées du centre de l'Algérie
+    zoom: 4, // Niveau de zoom initial
+    });
+  }
+
 
       // Appel à la fonction d'initialisation de la carte au chargement de la page
       google.maps.event.addDomListener(window, "load", initMap);
