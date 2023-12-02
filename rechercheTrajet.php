@@ -130,7 +130,7 @@
                     
                     </html>
                     
-                    <button type="submit" id="recherchetrajet"><a href="trajet.html">Rechercher le trajet</a></button>
+                    <button type="submit" id="recherchetrajet"><a href="resultatRecherche.php">Rechercher le trajet</a></button>
                 </form>
             </div>
             
