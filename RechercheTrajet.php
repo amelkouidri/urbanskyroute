@@ -13,6 +13,7 @@ if ($connexion->connect_error) {
 <html lang="en">
 
 <head>
+  
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
@@ -92,10 +93,20 @@ if ($connexion->connect_error) {
             </div>
             <nav id="navbar" class="navbar">
                 <ul>
-                    <li><a href="index-2.html">Home</a></li>
-                    <li><a href="profil.html">Profil</a></li>
-                    <li><a href="listtrips.html">Mes Trajets</a></li>
-                    <li><a href="index.html">Déconnexion</a></li>
+                    <li><a href="index-2.php">Home</a></li>
+                    <li><a href="profil.php">Profil</a></li>
+                    <li><a href="mestrajets.php">Mes Trajets</a></li>
+                    <li><a href="#"  onclick="confirmLogout()">Déconnexion</a></li>
+
+                    <script>
+                    function confirmLogout() {
+                    var confirmation = confirm("Êtes-vous sûr de vouloir vous déconnecter ?");
+                    if (confirmation) {
+                    window.location.href = "index0.php"; 
+                    }
+                    }
+                    </script>
+
                 </ul>
             </nav>
         </div>
@@ -172,7 +183,6 @@ if ($connexion->connect_error) {
             });
         }
 
-        // Appel à la fonction d'initialisation de la carte au chargement de la page
         google.maps.event.addDomListener(window, "load", initMap);
     </script>
 
