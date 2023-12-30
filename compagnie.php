@@ -34,62 +34,65 @@
       <div class="logo">
         <h1 class="text-light"><span>UrbanSky Route</span></h1>
       </div>
-      <?php
-      include('navConnecte.php');
-      //<!-- .navbar -->
-      ?>
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html">Déconnexion</a></li>
+        </ul>
+      </nav>
     </div>
   </header><!-- End Header -->
 
   <main id="main">
-
-    <!-- Blog Section -->
-    <!-- ======= Team Section ======= -->
-<section id="Team" class="blog">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-12">
-        <h2>Nos Compagnies Partenaires</h2>
-        <p>Découvrez les compagnies avec lesquelles nous collaborons pour vous offrir les meilleurs services.</p>
+  <section id="Team" class="blog">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <h2>Nos Compagnies Partenaires</h2>
+          <p>Découvrez les compagnies avec lesquelles nous collaborons pour vous offrir les meilleurs services.</p>
+        </div>
       </div>
-    </div>
 
-    <div class="blog-post">
-      <div class="entry-img">
-        <img src="airalgerie.png" alt="Company 1" class="img-fluid">
-      </div>
-      <h2 class="entry-title">AirAlgerie</h2>
-      <p class="entry-content">Air Algérie est la compagnie aérienne nationale de l'Algérie, fondée en 1947. Elle opère des vols domestiques et internationaux, reliant l'Algérie à diverses destinations en Europe, en Afrique, au Moyen-Orient et en Amérique du Nord. Forte d'une flotte moderne, Air Algérie s'efforce d'offrir des services de qualité, mettant l'accent sur la sécurité et le confort des passagers. En tant que porte-drapeau de l'aviation algérienne, la compagnie contribue au développement des liaisons aériennes et au rayonnement international du pays.</p>
-    </div>
+      <?php
+      $serveur = "localhost:3307";
+      $utilisateur = "root";
+      $motDePasse = "";
+      $baseDeDonnees = "urbanskyroute";
+      $connexion = new mysqli($serveur, $utilisateur, $motDePasse, $baseDeDonnees);
 
-    <div class="blog-post">
-      <div class="entry-img">
-        <img src="etusa.png" alt="Company 2" class="img-fluid">
-      </div>
-      <h2 class="entry-title">SNTF</h2>
-      <p class="entry-content">La Société Nationale des Transports Ferroviaires (SNTF) est l'entreprise ferroviaire nationale de l'Algérie. Fondée en 1963, elle gère le réseau ferroviaire du pays, offrant des services de transport de passagers et de marchandises. La SNTF joue un rôle essentiel dans la connectivité du territoire, facilitant les déplacements à travers l'Algérie. Elle s'engage à moderniser son infrastructure et à améliorer la qualité des services ferroviaires, contribuant ainsi au développement économique et à la mobilité durable du pays.</p>
-    </div>
+      if ($connexion->connect_error) {
+          die("La connexion à la base de données a échoué : " . $connexion->connect_error);
+      }
 
-    <div class="blog-post">
-      <div class="entry-img">
-        <img src="SNTF.png" alt="Company 3" class="img-fluid">
-      </div>
-      <h2 class="entry-title">ETUSA</h2>
-      <p class="entry-content">La Société de Transport Urbain et Suburbain d'Alger (ETUSA) est l'entreprise chargée du transport en commun dans la région d'Alger, la capitale de l'Algérie. Fondée en 1983, elle gère un réseau de bus et de tramway qui dessert la ville et ses environs. L'ETUSA joue un rôle crucial dans la mobilité urbaine, fournissant des services de transport public essentiels pour les résidents d'Alger. La société s'efforce d'améliorer constamment ses infrastructures et ses services pour répondre aux besoins croissants de la population et faciliter les déplacements au sein de la métropole.</p>
-    </div>
-  </div>
-</section><!-- End Team Section -->
+      $query = "SELECT id_compagnie, nom_compagnie, description, logo FROM compagnie";
+      $result = $connexion->query($query);
 
-        <!-- Add more companies as needed -->
-      </div>
-    </section><!-- End Blog Section -->
+      if ($result) {
+          while ($row = $result->fetch_assoc()) {
+              echo '<div class="blog-post">';
+              echo '<div class="entry-img">';
+              echo '<img src="'.$row["logo"].'" alt="Logo" class="img-fluid">';
+              echo '</div>';
+              echo '<h2 class="entry-title">' . $row["nom_compagnie"] . '</h2>';
+              echo '<p class="entry-content">' . $row["description"] . '</p>';
+              echo '</div>';
+          }
 
-  </main><!-- End Main Content -->
+          echo '</div>';
+          echo '</div>';
+          echo '</section>';
 
-  <?php
-      include('footer.php');
-      //<!-- .navbar -->
+          $result->free();
+      } else {
+          echo "Erreur lors de l'exécution de la requête : " . $connexion->error;
+      }
+
+      $connexion->close();
       ?>
+    </div>
+  </section>
+</main>
+
 
   <!-- Footer -->
   <footer id="footer" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
