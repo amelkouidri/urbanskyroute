@@ -100,7 +100,7 @@ if ($connexion->connect_error) {
         <h2>Recherche de Trajet</h2>
         <div class="row">
             <div class="col-md-4">
-                <form action="trajet.php" method="post" class="search-form">
+                <form action="resultatRecherche.php" method="post" class="search-form">
                     <div class="form-group">
                         <label for="from">De</label>
                         <select id="from" name="from" required>
