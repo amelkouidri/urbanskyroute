@@ -34,12 +34,10 @@
       <div class="logo">
         <h1 class="text-light"><span>UrbanSky Route</span></h1>
       </div>
-      <nav id="navbar" class="navbar">
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="index.html">Déconnexion</a></li>
-        </ul>
-      </nav>
+      <?php
+      include('navConnecte.php');
+      ?>
+        </div>
     </div>
   </header><!-- End Header -->
 
