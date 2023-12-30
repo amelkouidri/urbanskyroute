@@ -172,4 +172,8 @@ if ($connexion->connect_error) {
     </script>
 
 </body>
+
+  <?php
+              include('footer.php');
+              ?>
 </html>
