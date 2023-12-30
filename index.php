@@ -59,7 +59,7 @@
         <div class="carousel-container">
           <h2 class="animate__animated animate__fadeInDown">Bienvenue sur <span>UrbanSkyRoute </span></h2>
           <p class="animate__animated animate__fadeInUp">Trouvez et visualisez des trajets aériens et urbains pour voyager de manière efficace et pratique. Utilisez notre service pour planifier vos déplacements en ville.</p>
-          <a href="recherche.html" class="btn-get-started animate__animated animate__fadeInUp">Commencer la recherche</a>
+          <a href=ConnexionPage.php" class="btn-get-started animate__animated animate__fadeInUp">Commencer la recherche</a>
          </div>
      </div>
 
@@ -69,7 +69,7 @@
          <div class="carousel-container">
          <h2 class="animate__animated animate__fadeInDown">Planifiez Vos Trajets</h2>
          <p class="animate__animated animate__fadeInUp">Trouvez des vols, trains et bus pour vous rendre à destination. Notre service simplifie la recherche de trajets urbains pour que vous puissiez voyager en toute tranquillité.</p>
-         <a href="recherche.html" class="btn-get-started animate__animated animate__fadeInUp">Commencer la recherche</a>
+         <a href="ConnexionPage.php" class="btn-get-started animate__animated animate__fadeInUp">Commencer la recherche</a>
        </div>
      </div>
 
@@ -79,7 +79,7 @@
       <div class="carousel-container">
        <h2 class="animate__animated animate__fadeInDown">Trouvez Votre Itinéraire Idéal</h2>
         <p class="animate__animated animate__fadeInUp">Découvrez les meilleures options de trajet pour vos déplacements en ville. Notre plateforme vous aide à trouver les itinéraires les plus pratiques et efficaces.</p>
-        <a href="recherche.html" class="btn-get-started animate__animated animate__fadeInUp">Commencer la recherche</a>
+        <a href="ConnexionPage.php" class="btn-get-started animate__animated animate__fadeInUp">Commencer la recherche</a>
       </div>
     </div>
 
@@ -98,38 +98,16 @@
   <main id="main">
 
     <!-- ======= Services Section ======= -->
-<section class="services">
-  <div class="container">
-
-    <div class="row">
-      <div class="col-md-6 col-lg-4 d-flex align-items-stretch" data-aos="fade-up">
-        <div class="icon-box icon-box-pink">
-          <div class="icon"><i class="bx bxl-dribbble"></i></div>
-          <h4 class="title"><a href="#">Air Algérie</a></h4>
-          <p class="description">La compagnie nationale d'Algérie, Air Algérie, vous propose un moyen sûr et efficace de voyager par voie aérienne. Découvrez des vols intérieurs et internationaux de qualité.</p>
-        </div>
+  <section class="services">
+      <div class="container">
+          <div class="row">
+              <?php
+              include('services_section.php'); 
+              afficherSectionServices();
+              ?>
+          </div>
       </div>
-
-      <div class="col-md-6 col-lg-4 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
-        <div class="icon-box icon-box-cyan">
-          <div class="icon"><i class="bx bx-file"></i></div>
-          <h4 class="title"><a href="#">SNTF</a></h4>
-          <p class="description">La Société Nationale des Transports Ferroviaires (SNTF) est le choix idéal pour les voyages en train en Algérie. Profitez d'un réseau ferroviaire complet pour vos déplacements.</p>
-        </div>
-      </div>
-
-      <div class="col-md-6 col-lg-4 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
-        <div class="icon-box icon-box-green">
-          <div class="icon"><i class="bx bx-tachometer"></i></div>
-          <h4 class="title"><a href="#">ETUSA</a></h4>
-          <p class="description">L'Entreprise de Transport Urbain et Suburbain d'Alger (ETUSA) assure des services de transport en bus à Alger. Facilitez vos déplacements dans la capitale.</p>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-</section><!-- End Services Section -->
+  </section>
 
 
 <!-- ======= Why Us Section ======= -->
