@@ -92,11 +92,6 @@
 </main>
 
 
-  <!-- Footer -->
-  <footer id="footer" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
-    <!-- Footer content goes here -->
-  </footer><!-- End Footer -->
-
   <!-- Vendor JS Files -->
   <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
   <script src="assets/vendor/aos/aos.js"></script>
@@ -111,5 +106,8 @@
   <script src="assets/js/custom.js"></script>
 
 </body>
+    <?php
+              include('footer.php');
+              ?>
 
 </html>
