@@ -91,24 +91,9 @@ if ($connexion->connect_error) {
             <div class="logo">
                 <h1 class="text-light"><span>UrbanSky Route</span></h1>
             </div>
-            <nav id="navbar" class="navbar">
-                <ul>
-                    <li><a href="index-2.php">Home</a></li>
-                    <li><a href="profil.php">Profil</a></li>
-                    <li><a href="mestrajets.php">Mes Trajets</a></li>
-                    <li><a href="#"  onclick="confirmLogout()">Déconnexion</a></li>
-
-                    <script>
-                    function confirmLogout() {
-                    var confirmation = confirm("Êtes-vous sûr de vouloir vous déconnecter ?");
-                    if (confirmation) {
-                    window.location.href = "index0.php"; 
-                    }
-                    }
-                    </script>
-
-                </ul>
-            </nav>
+             <?php
+              include('navConnecte.php');
+              ?>
         </div>
     </header><!-- End Header -->
     <div class="container">
