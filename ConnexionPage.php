@@ -73,106 +73,142 @@
         </div>
     </div>
     <!-- Script jQuery -->
-    <script>
-        $(document).ready(function () {
-            $(".login-btn").click(function () {
-                var username = $("#user").val();
-                var password = $("#pass").val();
-                if (username.trim() === "" ) {
-                    $("#user").css("border", "2px solid red");
-                    alert("Veuillez remplir tous les champs.");
-                    return;
-                }
-                if (password.trim() === "") {
-                    $("#pass").css("border", "2px solid red");
-                    alert("Veuillez remplir tous les champs.");
-                    return;
-                }
-                $.ajax({
-                    type: "POST",
-                    url: "connexion.php",
-                    data: { user: username, pass: password },
-                    success: function (data) {
-                        console.log(data);
-                        $("#user, #pass").css("border", "1px solid #ccc");
-                        if (data == "Connexion réussie") {
-                            window.location.href = "index-2.html";
-                        } else {
-                            alert("Nom d'utilisateur ou mot de passe incorrect.");
-                        }
-                    },
-                    error: function () {
-                        alert("Erreur lors de la requête Ajax");
+<script>
+    $(document).ready(function () {
+        $(".login-btn").click(function () {
+            var username = $("#user").val();
+            var password = $("#pass").val();
+
+            if (username.trim() === "") {
+                $("#user").css("border", "2px solid red");
+                alert("Veuillez remplir tous les champs.");
+                return;
+            }
+
+            if (password.trim() === "") {
+                $("#pass").css("border", "2px solid red");
+                alert("Veuillez remplir tous les champs.");
+                return;
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "connexion.php",
+                data: { user: username, pass: password },
+                success: function (data) {
+                    console.log(data);
+                    $("#user, #pass").css("border", "1px solid #ccc");
+
+                    if (data === "Connexion réussie") {
+                        // Vérification du rôle ici
+                        vérifierRole(username);
+                    } else {
+                        alert("Nom d'utilisateur ou mot de passe incorrect.");
                     }
-                });
-            });
-            $(".signup-btn").click(function () {
-                var username = $("#user-signup").val();
-                var password = $("#pass-signup").val();
-                var repeatPassword = $("#pass-repeat").val();
-                var email = $("#email").val();
-                var usernameRegex = /^[a-zA-Z0-9_-]{3,16}$/;
-                var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (username.trim() === "" || password.trim() === "" || repeatPassword.trim() === "" || email.trim() === "") {
-                    $("#user-signup, #pass-signup, #pass-repeat, #email").css("border", "2px solid red");
-                    alert("Veuillez remplir tous les champs.");
-                    return;
+                },
+                error: function () {
+                    alert("Erreur lors de la requête Ajax");
                 }
-                if (password !== repeatPassword) {
-                    $("#pass-signup, #pass-repeat").css("border", "2px solid red");
-                    alert("Les mots de passe ne correspondent pas.");
-                    return;
-                }
-                if (!usernameRegex.test(username)) {
-                    $("#user-signup").css("border", "2px solid red");
-                    alert("Le nom d'utilisateur doit être alphanumérique, avec des underscores ou des tirets, et avoir une longueur de 3 à 16 caractères.");
-                    return;
-                }
-                if (!emailRegex.test(email)) {
-                    $("#email").css("border", "2px solid red");
-                    alert("Veuillez entrer une adresse e-mail valide.");
-                    return;
-                }
-                $.ajax({
-                    type: "POST",
-                    url: "inscription.php",
-                    data: { user: username, pass: password, email: email },
-                    success: function (data) {
-                        $("#user-signup, #pass-signup, #pass-repeat, #email").css("border", "1px solid #ccc");
-                        if (data === "Inscription réussie") {
-                            window.location.href = "index-2.html";
-                        } else {
-                            alert(data);
-                        }
-                    },
-                    error: function () {
-                        alert("Erreur lors de la requête Ajax");
-                    }
-                });
-            });
-            $("#pass-signup").on("input", function () {
-                var password = $(this).val();
-                var result = zxcvbn(password);
-                switch (result.score) {
-                    case 0:
-                    case 1:
-                        $("#password-strength").text("Faible");
-                        break;
-                    case 2:
-                        $("#password-strength").text("Moyen");
-                        break;
-                    case 3:
-                    case 4:
-                        $("#password-strength").text("Fort");
-                        break;
-                    default:
-                        $("#password-strength").text("");
-                }
-            });
-            $("#user, #pass, #user-signup, #pass-signup, #pass-repeat, #email").on("input", function () {
-                $(this).css("border", "1px solid #ccc");
             });
         });
-    </script>
+
+        $(".signup-btn").click(function () {
+            var username = $("#user-signup").val();
+            var password = $("#pass-signup").val();
+            var repeatPassword = $("#pass-repeat").val();
+            var email = $("#email").val();
+            var usernameRegex = /^[a-zA-Z0-9_-]{3,16}$/;
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (username.trim() === "" || password.trim() === "" || repeatPassword.trim() === "" || email.trim() === "") {
+                $("#user-signup, #pass-signup, #pass-repeat, #email").css("border", "2px solid red");
+                alert("Veuillez remplir tous les champs.");
+                return;
+            }
+
+            if (password !== repeatPassword) {
+                $("#pass-signup, #pass-repeat").css("border", "2px solid red");
+                alert("Les mots de passe ne correspondent pas.");
+                return;
+            }
+
+            if (!usernameRegex.test(username)) {
+                $("#user-signup").css("border", "2px solid red");
+                alert("Le nom d'utilisateur doit être alphanumérique, avec des underscores ou des tirets, et avoir une longueur de 3 à 16 caractères.");
+                return;
+            }
+
+            if (!emailRegex.test(email)) {
+                $("#email").css("border", "2px solid red");
+                alert("Veuillez entrer une adresse e-mail valide.");
+                return;
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "inscription.php",
+                data: { user: username, pass: password, email: email },
+                success: function (data) {
+                    $("#user-signup, #pass-signup, #pass-repeat, #email").css("border", "1px solid #ccc");
+
+                    if (data === "Inscription réussie") {
+                        // Vérification du rôle ici
+                        vérifierRole(username);
+                    } else {
+                        alert(data);
+                    }
+                },
+                error: function () {
+                    alert("Erreur lors de la requête Ajax");
+                }
+            });
+        });
+
+        function vérifierRole(username) {
+            $.ajax({
+                type: "POST",
+                url: "verifier_role.php",
+                data: { user: username },
+                success: function (roleData) {
+                    if (roleData === "user") {
+                        window.location.href = "index-2.php";
+                    } else if (roleData === "admin") {
+                        window.location.href = "index3.php";
+                    } else {
+                        alert("Rôle non reconnu");
+                    }
+                },
+                error: function () {
+                    alert("Erreur lors de la requête Ajax pour vérifier le rôle");
+                }
+            });
+        }
+
+        $("#pass-signup").on("input", function () {
+            var password = $(this).val();
+            var result = zxcvbn(password);
+
+            switch (result.score) {
+                case 0:
+                case 1:
+                    $("#password-strength").text("Faible");
+                    break;
+                case 2:
+                    $("#password-strength").text("Moyen");
+                    break;
+                case 3:
+                case 4:
+                    $("#password-strength").text("Fort");
+                    break;
+                default:
+                    $("#password-strength").text("");
+            }
+        });
+
+        $("#user, #pass, #user-signup, #pass-signup, #pass-repeat, #email").on("input", function () {
+            $(this).css("border", "1px solid #ccc");
+        });
+    });
+</script>
 </body>
 </html>
