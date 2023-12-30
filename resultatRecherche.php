@@ -2,55 +2,96 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Compagnies - UrbanSky Route</title>
-    <meta content="" name="description">
-    <meta content="" name="keywords">
-    <link href="assets/img/favicon.png" rel="icon">
-    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    
+    <!-- Favicon and Apple Touch Icon -->
+    <link rel="icon" href="assets/img/favicon.png">
+    <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+    
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,700,700i&display=swap" rel="stylesheet">
+    
+    <!-- Vendor CSS -->
     <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
     <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
     <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-    <link href="assets/css/style.css" rel="stylesheet"><style>
+    
+    <!-- Custom Styles -->
+    <link href="assets/css/style.css" rel="stylesheet">
+
+    <!-- Custom CSS Styles -->
+    <style>
+
+      /* Style pour le lien de recherche de trajet */
+.centered-link {
+    display: block;
+    text-align: center;
+    margin-top: 20px; /* Ajustez la marge selon vos préférences */
+}
+
+.centered-link a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #3498db; /* Couleur de fond */
+    color: #fff; /* Couleur du texte */
+    text-decoration: none;
+    border-radius: 5px; /* Coins arrondis */
+    transition: background-color 0.3s ease; /* Animation de transition */
+}
+
+.centered-link a:hover {
+    background-color: #2980b9; /* Couleur de fond au survol */
+}
+
+        .wilaya-table {
+            border-spacing: 100px;
+        }
+
+        .wilaya-table td {
+            padding: 10px;
+        }
+
         h3 {
             margin-left: 150px;
-            margin-top: 100px; /* Ajustez la valeur pour décaler le titre vers le bas */
+            margin-top: 100px;
         }
-    
+
         .city {
-            width: 60px; /* Largeur du rectangle */
-            height: 30px; /* Hauteur du rectangle */
+            width: 60px;
+            height: 30px;
             background-color: rgb(201, 201, 253);
             display: inline-block;
-            margin: 50px 10px 0; /* Ajusté la marge du haut */
+            margin: 50px 10px 0;
             text-align: center;
             line-height: 30px;
             font-weight: bold;
             font-size: 16px;
-            border-radius: 5px; /* Coins arrondis pour le rectangle */
+            border-radius: 5px;
         }
-    
+
         .bus, .plane, .train {
             width: 100px;
             height: 2px;
             display: inline-block;
-            margin: 50px 10px 0; /* Ajustez la marge du haut */
+            margin: 50px 10px 0;
         }
-    
+
         .bus {
             background-color: #007bff;
         }
-    
+
         .plane {
-            background-color: #ff5733 ;
+            background-color: #ff5733;
         }
-    
+
         .train {
             background-color: #009688;
         }
-    
+
         .graph-container {
             background-color: #f7f7f7;
             border: 1px solid #ddd;
@@ -61,148 +102,219 @@
             display: flex;
             align-items: center;
         }
-    
+
         .legend {
             position: absolute;
-            top: 580px; /* Ajustez la distance par rapport au haut */
-            right: 180px; /* Ajustez la distance par rapport à droite */
+            top: 580px;
+            right: 180px;
             display: flex;
-            flex-direction: row; /* Les légendes seront affichées horizontalement */
+            flex-direction: row;
             align-items: center;
         }
-    
+
         .legend div {
             width: 20px;
-            height: 2px; /* Hauteur du trait */
-            margin: 0px 5px; /* Espacement entre les légendes */
+            height: 2px;
+            margin: 0px 5px;
         }
-    
+
         .bus-legend {
-            background-color: #007bff; /* Couleur du trait pour le bus */
+            background-color: #007bff;
         }
-    
+
         .plane-legend {
-            background-color: #ff5733; /* Couleur du trait pour l'avion */
+            background-color: #ff5733;
         }
-    
+
         .train-legend {
-            background-color: #009688; /* Couleur du trait pour le train */
+            background-color: #009688;
         }
-    
+
         .info-container {
             background-color: #34495e;
             border: 2px solid #2c3e50;
             border-radius: 10px;
             padding: 20px;
-            margin: 20px;
+            margin: 20px 70px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
             color: #ecf0f1;
         }
-    
+
         .info-container h3 {
             font-size: 24px;
             margin-top: 2px;
             margin-bottom: 10px;
             color: #3498db;
         }
-    
-        .info-container p {
-            font-size: 18px;
-            margin: 0 0 10px;
-        }
-    
-        .info-container p:last-child {
-            margin: 0;
-        }
+
         .map {
-      height: 400px;
-      width: 100%;
-    }
+            height: 400px;
+            width: 100%;
+        }
     </style>
-    
 </head>
+
 <body>
     <header id="header" class="fixed-top d-flex align-items-center">
         <div class="container d-flex justify-content-between align-items-center">
             <div class="logo">
                 <h1 class="text-light"><span>UrbanSky Route</span></h1>
             </div>
-            
-      <?php
-      include('navConnecte.php');
-      //<!-- .navbar -->
-      ?>
+            <?php include('navConnecte.php'); ?>
         </div>
-    </header><!-- End Header -->
-  
-        <div class="map" id="map"></div>
-    
+    </header>
+ <div class="map" id="map"></div>
 
-    <h3>Votre trajet : </h3>
-    <div class="container">
-        <div class="graph-container">
-            <div class="legend">
-                <div class="bus-legend"></div> Bus
-                <div class="plane-legend"></div> Avion
-                <div class="train-legend"></div> Train
-            </div>
-            
-            <div id="correspondences-graph">
-                <div class="city">WilayaA</div>
-                <div class="bus"></div>
-                <div class="city">WilayaB</div>
-                <div class="plane"></div>
-                <div class="city">WilayaC</div>
-                <div class="train"></div>
-                <div class="city">WilayaD</div>
-                <div class="plane"></div>
-                <div class="city">WilayaA</div>
-            </div>
-           
+<?php
+$serveur = "localhost:3307";
+$utilisateur = "root";
+$motDePasse = "";
+$baseDeDonnees = "urbanskyroute";
+$connexion = new mysqli($serveur, $utilisateur, $motDePasse, $baseDeDonnees);
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $wilayaFromNom = $_POST['from'];
+    $wilayaToNom = $_POST['to'];
+    $date = $_POST['date'];
+    echo "<h3>Votre trajet entre $wilayaFromNom et $wilayaToNom à la date $date: </h3>";
+}
+?>
+
+<div class="container">
+    <div class="graph-container">
+        <div class="legend">
+            <div class="bus-legend"></div> Bus
+            <div class="plane-legend"></div> Avion
+            <div class="train-legend"></div> Train
         </div>
-        <div class="info-container">
-            <h3>Informations sur le trajet</h3>
-            <p>Heure de départ : 08:00 AM</p>
-            <p>Heure d'arrivée : 06:00 PM</p>
-            <p>Temps estimé : 10 heures</p>
+        <div id="correspondences-graph">
+            <?php
+            $direct = null ; 
+            function afficherEtape($wilayaFrom, $compagnie, $wilayaTo) {
+                echo "<div class='city'>$wilayaFrom</div>";
+                switch ($compagnie) {
+                    case 1:
+                        echo "<div class='plane'></div>";
+                        break;
+                    case 2:
+                        echo "<div class='bus'></div>";
+                        break;
+                    case 3:
+                        echo "<div class='train'></div>";
+                        break;
+                }
+                echo "<div class='city'>$wilayaTo</div>";
+            }
+
+            $wilayafromQuery = "SELECT id FROM wilaya WHERE nom = '$wilayaFromNom'";
+            $wilayatoQuery = "SELECT id FROM wilaya WHERE nom = '$wilayaToNom'";
+
+            $wilayafromResult = $connexion->query($wilayafromQuery);
+            $wilayatoResult = $connexion->query($wilayatoQuery);
+
+            if ($wilayafromResult && $wilayatoResult) {
+                $wilayafromRow = $wilayafromResult->fetch_assoc();
+                $wilayatoRow = $wilayatoResult->fetch_assoc();
+                $wilayafrom = $wilayafromRow['id'];
+                $wilayato = $wilayatoRow['id'];
+
+                $directQuery = "SELECT t.id_trajet, p.id_compagnie FROM trajet t
+                                INNER JOIN propose p ON t.id_trajet = p.id_trajet
+                                WHERE t.wilaya_depart_id = $wilayafrom AND t.wilaya_arrivee_id = $wilayato";
+                $resultDirect = $connexion->query($directQuery);
+
+                if ($resultDirect->num_rows > 0) {
+                    $rowDirect = $resultDirect->fetch_assoc();
+                    $idTrajetDirect = $rowDirect['id_trajet'];
+                    $idCompagnieDirect = $rowDirect['id_compagnie'];
+
+                    echo "Trajet direct trouvé :"; $direct = true;
+
+                    afficherEtape($wilayafrom, $idCompagnieDirect, $wilayato);
+                } else {
+                    function trouverTrajets($wilayaActuelle, $wilayato, $cheminActuel, $wilayasIntermediaires) {
+                        global $connexion;
+                        $correspondanceQuery = "SELECT * FROM trajet WHERE wilaya_depart_id = $wilayaActuelle";
+                        $resultCorrespondance = $connexion->query($correspondanceQuery);
+
+                        if ($resultCorrespondance) {
+                            while ($rowCorrespondance = $resultCorrespondance->fetch_assoc()) {
+                                $idWilayaArriveeCorrespondance = $rowCorrespondance['wilaya_arrivee_id'];
+                                $idTrajetCorrespondance = $rowCorrespondance['id_trajet'];
+                                $possedQuery = "SELECT id_compagnie FROM propose WHERE id_trajet = $idTrajetCorrespondance";
+                                $resultPossed = $connexion->query($possedQuery);
+
+                                if ($resultPossed->num_rows > 0) {
+                                    $rowPossed = $resultPossed->fetch_assoc();
+                                    $idCompagnieCorrespondance = $rowPossed['id_compagnie'];
+                                    $nouveauChemin = $cheminActuel;
+                                    $nouveauChemin[] = array(
+                                        'wilayaFrom' => $wilayaActuelle,
+                                        'compagnie' => $idCompagnieCorrespondance,
+                                        'wilayaTo' => $idWilayaArriveeCorrespondance
+                                    );
+
+                                    if ($idWilayaArriveeCorrespondance == $wilayato) {
+                                        $wilayasIntermediaires[] = $nouveauChemin;
+                                    } else {
+                                        $wilayasIntermediaires = trouverTrajets($idWilayaArriveeCorrespondance, $wilayato, $nouveauChemin, $wilayasIntermediaires);
+                                    }
+                                }
+                            }
+                        }
+                        return $wilayasIntermediaires;
+                    }
+
+                    $wilayasIntermediaires = trouverTrajets($wilayafrom, $wilayato, array(), array());
+
+                    if (!empty($wilayasIntermediaires)) {
+                        echo "Trajets intermédiaires trouvés :<br>";
+                        foreach ($wilayasIntermediaires as $chemin) {
+                            foreach ($chemin as $etape) {
+                                afficherEtape($etape['wilayaFrom'], $etape['compagnie'], $etape['wilayaTo']);
+                            }
+                            echo "<br>";
+                        }
+                    } else {
+                        echo "Aucun trajet intermédiaire trouvé.";
+                    }
+                }
+            }
+            ?>
         </div>
     </div>
+</div>
+</div>
+</div>
 
-    
-    <!-- ======= Services Section ======= -->
-    <h3>Compagnies utilisees :</h3>
-<section class="services">
-    <div class="container">
-  
-      <div class="row">
-        <div class="col-md-6 col-lg-4 d-flex align-items-stretch" data-aos="fade-up">
-          <div class="icon-box icon-box-pink">
-            <div class="icon"><i class="bx bxl-dribbble"></i></div>
-            <h4 class="title"><a href="#">Air Algérie</a></h4>
-            <p class="description">La compagnie nationale d'Algérie, Air Algérie, vous propose un moyen sûr et efficace de voyager par voie aérienne. Découvrez des vols intérieurs et internationaux de qualité.</p>
-          </div>
-        </div>
-  
-        <div class="col-md-6 col-lg-4 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
-          <div class="icon-box icon-box-cyan">
-            <div class="icon"><i class="bx bx-file"></i></div>
-            <h4 class="title"><a href="#">SNTF</a></h4>
-            <p class="description">La Société Nationale des Transports Ferroviaires (SNTF) est le choix idéal pour les voyages en train en Algérie. Profitez d'un réseau ferroviaire complet pour vos déplacements.</p>
-          </div>
-        </div>
-  
-        <div class="col-md-6 col-lg-4 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
-          <div class="icon-box icon-box-green">
-            <div class="icon"><i class="bx bx-tachometer"></i></div>
-            <h4 class="title"><a href="#">ETUSA</a></h4>
-            <p class="description">L'Entreprise de Transport Urbain et Suburbain d'Alger (ETUSA) assure des services de transport en bus à Alger. Facilitez vos déplacements dans la capitale.</p>
-          </div>
-        </div>
-  
-      </div>
-  
-    </div>
-  </section><!-- End Services Section -->
+
+    <div class="info-container">
+    <h3>Informations sur le codage des wilayas</h3>
+    <table class="wilaya-table">
+        <?php
+        $query = "SELECT * FROM wilaya";
+        $result = $connexion->query($query);
+
+        if ($result) {
+            echo "<tr>"; 
+            $counter = 0; 
+            while ($row = $result->fetch_assoc()) {
+                echo "<td>{$row['id']}:{$row['nom']}</td>";
+                $counter++;
+                if ($counter == 9) {
+                    echo "</tr><tr>";
+                    $counter = 0; 
+                }
+            }
+            echo "</tr>"; 
+            $result->free();
+        } else {
+            echo "Erreur lors de l'exécution de la requête : " . $connexion->error;
+        }
+        ?>
+    </table>
+</div>
+</div>
   
 <!-- ======= Features Section ======= -->
 <section class="features">
@@ -211,102 +323,175 @@
       <div class="section-title">
         <h2>Plus de details</h2>
     </div>
-  
-      <div class="row" data-aos="fade-up">
-        <div class="col-md-5">
-          <img src="etusa.png" class="img-fluid" alt="Service 1">
-        </div>
-        <div class="col-md-7 pt-4">
-          <h3>Bus 1</h3>
-          <p class="fst-italic">
-            Voyagez en bus avec Urban Skyroute pour une expérience agréable et pratique.
-          </p>
-          <ul>
-            <li><i class="bi bi-check"></i> Heure de départ : 09:00 AM</li>
-            <li><i class="bi bi-check"></i> Heure d'arrivée : 01:00 PM</li>
-            <li><i class="bi bi-check"></i> Nombre de passagers : 30</li>
-            <li><i class="bi bi-check"></i> Type de véhicule : Autocar</li>
-          </ul>
-        </div>
-      </div>
-  
-      <div class="row" data-aos="fade-up">
-        <div class="col-md-5 order-1 order-md-2">
-          <img src="airalgerie.png" class="img-fluid" alt="Service 2">
-        </div>
-        <div class="col-md-7 pt-5 order-2 order-md-1">
-          <h3>Avion 1 </h3>
-          <p class="fst-italic">
-            Optez pour un voyage en avion avec Urban Skyroute pour gagner du temps.
-          </p>
-          <ul>
-            <li><i class="bi bi-check"></i> Heure de départ : 07:30 AM</li>
-            <li><i class="bi bi-check"></i> Heure d'arrivée : 10:30 AM</li>
-            <li><i class="bi bi-check"></i> Nombre de passagers : 150</li>
-            <li><i class="bi bi-check"></i> Type de véhicule : Avion</li>
-          </ul>
-        </div>
-      </div>
-  
-      <div class="row" data-aos="fade-up">
-        <div class="col-md-5">
-          <img src="SNTF.png" class="img-fluid" alt="Service 3">
-        </div>
-        <div class="col-md-7 pt-5">
-          <h3>Train 1</h3>
-          <p>
-            Optez pour des voyages en train confortables et économiques avec Urban Skyroute.
-          </p>
-          <ul>
-            <li><i class="bi bi-check"></i> Heure de départ : 08:45 AM</li>
-            <li><i class="bi bi-check"></i> Heure d'arrivée : 12:15 PM</li>
-            <li><i class="bi bi-check"></i> Nombre de passagers : 80</li>
-            <li><i class="bi bi-check"></i> Type de véhicule : Train</li>
-          </ul>
-        </div>
-      </div>
-      <div class="row" data-aos="fade-up">
-        <div class="col-md-5 order-1 order-md-2">
-          <img src="airalgerie.png" class="img-fluid" alt="Service 2">
-        </div>
-        <div class="col-md-7 pt-5 order-2 order-md-1">
-          <h3>Avion 2 </h3>
-          <p class="fst-italic">
-            Optez pour un voyage en avion avec Urban Skyroute pour gagner du temps.
-          </p>
-          <ul>
-            <li><i class="bi bi-check"></i> Heure de départ : 07:30 AM</li>
-            <li><i class="bi bi-check"></i> Heure d'arrivée : 10:30 AM</li>
-            <li><i class="bi bi-check"></i> Nombre de passagers : 150</li>
-            <li><i class="bi bi-check"></i> Type de véhicule : Avion</li>
-          </ul>
-        </div>
-      </div>
-  
-    </div>
-    
-  </section><!-- End Features Section -->
+    <?php
+if($direct==false){
+foreach ($wilayasIntermediaires as $chemin) {
+    foreach ($chemin as $etape) {
+        $wilayaFrom = $etape['wilayaFrom'];
+        $wilayaTo = $etape['wilayaTo'];
+        $query = "SELECT 
+        t.heure_depart, t.heure_arrivee, t.wilaya_depart_id, t.wilaya_arrivee_id,
+        p.id_compagnie, p.id_transport,
+        comp.nom_compagnie AS compagnie_nom,
+        comp.logo AS compagnie_logo,  
+        trans.type_transport, trans.nombre_passager
+    FROM trajet t
+    INNER JOIN propose p ON t.id_trajet = p.id_trajet
+    INNER JOIN compagnie comp ON p.id_compagnie = comp.id_compagnie
+    INNER JOIN transport trans ON p.id_transport = trans.id_transport
+    WHERE t.wilaya_depart_id = $wilayaFrom AND t.wilaya_arrivee_id = $wilayaTo";
 
+        $result = $connexion->query($query);
 
-  <!-- Google Maps JavaScript -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmtaQUZuwVQLHpWIx-ry3HmGHnyL2Dkms&libraries=places"></script>
-  <script>
-    function initMap() {
-      const map = new google.maps.Map(document.getElementById("map"), {
-        center: { lat: 0, lng: 0 }, // Coordonnées du centre de la carte
-        zoom: 8, // Niveau de zoom initial
-      });
+        if ($result && $row = $result->fetch_assoc()) {
+            echo '<div class="row" data-aos="fade-up">';
+            echo '<div class="col-md-5">';
+            echo "<img src='{$row['compagnie_logo']}' alt='Logo de la compagnie' style='max-width: 100px; max-height: 100px;'>";
+            echo '</div>';
+            echo '<div class="col-md-7 pt-4">';
+            echo "<h3>{$row['compagnie_nom']}</h3>";
+            echo '<p class="fst-italic">Description de l\'étape</p>';
+            echo '<ul>';
+            echo "<li><i class=\"bi bi-check\"></i> Heure de départ : {$row['heure_depart']}</li>";
+            echo "<li><i class=\"bi bi-check\"></i> Heure d'arrivée : {$row['heure_arrivee']}</li>";
+            echo "<li><i class=\"bi bi-check\"></i> Type de transport : {$row['type_transport']}</li>";
+            echo "<li><i class=\"bi bi-check\"></i> Nombre de passagers : {$row['nombre_passager']}</li>";
+            echo "<li><i class=\"bi bi-check\"></i> Wilaya de départ : {$row['wilaya_depart_id']}</li>";
+            echo "<li><i class=\"bi bi-check\"></i> Wilaya d'arrivée : {$row['wilaya_arrivee_id']}</li>";
+            echo '</ul>';
+            echo '</div>';
+            echo '</div>';
+        } else {
+            echo "Erreur lors de la récupération des informations sur l'étape.";
+        }
     }
+    echo "<br>";
+}}
+else {
+  $query = "SELECT 
+      t.heure_depart, t.heure_arrivee, t.wilaya_depart_id, t.wilaya_arrivee_id,
+      p.id_compagnie, p.id_transport,
+      comp.nom_compagnie AS compagnie_nom,
+      comp.logo AS compagnie_logo,  
+      trans.type_transport, trans.nombre_passager
+  FROM trajet t
+  INNER JOIN propose p ON t.id_trajet = p.id_trajet
+  INNER JOIN compagnie comp ON p.id_compagnie = comp.id_compagnie
+  INNER JOIN transport trans ON p.id_transport = trans.id_transport
+  WHERE t.wilaya_depart_id = (SELECT id FROM wilaya WHERE nom = '$wilayaFromNom') 
+  AND t.wilaya_arrivee_id = (SELECT id FROM wilaya WHERE nom = '$wilayaToNom')";
 
-    // Appel à la fonction d'initialisation de la carte au chargement de la page
-    google.maps.event.addDomListener(window, "load", initMap);
-  </script>
+  $result = $connexion->query($query);
+
+  if ($result && $row = $result->fetch_assoc()) {
+      echo '<div class="row" data-aos="fade-up">';
+      echo '<div class="col-md-5">';
+      echo "<img src='{$row['compagnie_logo']}' alt='Logo de la compagnie' style='max-width: 100px; max-height: 100px;'>";
+      echo '</div>';
+      echo '<div class="col-md-7 pt-4">';
+      echo "<h3>{$row['compagnie_nom']}</h3>";
+      echo '<p class="fst-italic">Description de l\'étape</p>';
+      echo '<ul>';
+      echo "<li><i class=\"bi bi-check\"></i> Heure de départ : {$row['heure_depart']}</li>";
+      echo "<li><i class=\"bi bi-check\"></i> Heure d'arrivée : {$row['heure_arrivee']}</li>";
+      echo "<li><i class=\"bi bi-check\"></i> Type de transport : {$row['type_transport']}</li>";
+      echo "<li><i class=\"bi bi-check\"></i> Nombre de passagers : {$row['nombre_passager']}</li>";
+      echo "<li><i class=\"bi bi-check\"></i> Wilaya de départ : {$row['wilaya_depart_id']}</li>";
+      echo "<li><i class=\"bi bi-check\"></i> Wilaya d'arrivée : {$row['wilaya_arrivee_id']}</li>";
+      echo '</ul>';
+      echo '</div>';
+      echo '</div>';
+  } else {
+      echo "Erreur lors de la récupération des informations sur l'étape.";
+  }
+}
+
+?>
+</div>
+<div class="centered-link">
+    <a href="RechercheTrajet.php">Rechercher un autre trajet</a>
+</div>
+
+</section>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmtaQUZuwVQLHpWIx-ry3HmGHnyL2Dkms&libraries=places" async defer></script>
+<div id="map" style="height: 400px;"></div>
+
+<script>
+   function initMap() {
+ <?php
+$resultLatFrom = $connexion->query("SELECT latitude FROM wilaya WHERE nom = '$wilayaFromNom'");
+if ($resultLatFrom) {
+    $rowLatFrom = $resultLatFrom->fetch_assoc();
+    $latFrom = $rowLatFrom['latitude'];
+} else {
+    $latFrom = 0;
+}
+
+$resultLngFrom = $connexion->query("SELECT longitude FROM wilaya WHERE nom = '$wilayaFromNom'");
+if ($resultLngFrom) {
+    $rowLngFrom = $resultLngFrom->fetch_assoc();
+    $lngFrom = $rowLngFrom['longitude'];
+} else {
+    $lngFrom = 0;
+}
+
+$resultLatTo = $connexion->query("SELECT latitude FROM wilaya WHERE nom = '$wilayaToNom'");
+if ($resultLatTo) {
+    $rowLatTo = $resultLatTo->fetch_assoc();
+    $latTo = $rowLatTo['latitude'];
+} else {
+    $latTo = 0;
+}
+
+$resultLngTo = $connexion->query("SELECT longitude FROM wilaya WHERE nom = '$wilayaToNom'");
+if ($resultLngTo) {
+    $rowLngTo = $resultLngTo->fetch_assoc();
+    $lngTo = $rowLngTo['longitude'];
+} else {
+    $lngTo = 0;
+}
+?>
+
+    var depart = { lat: <?php echo $latFrom; ?>, lng: <?php echo $lngFrom; ?> };
+var arrivee = { lat: <?php echo $latTo; ?>, lng: <?php echo $lngTo; ?> };
+
+console.log("Coordonnées de départ :", depart.lat, depart.lng);
+console.log("Coordonnées d'arrivée :", arrivee.lat, arrivee.lng);
+
+      var map = new google.maps.Map(document.getElementById('map'), {
+         zoom: 5,
+         center: depart
+      });
+
+      var marqueurDepart = new google.maps.Marker({
+         position: depart,
+         map: map,
+         title: 'Départ'
+      });
+
+      var marqueurArrivee = new google.maps.Marker({
+         position: arrivee,
+         map: map,
+         title: 'Arrivée'
+      });
+
   
+      var trajet = new google.maps.Polyline({
+         path: [depart, arrivee],
+         geodesic: true,
+         strokeColor: '#FF0000', 
+         strokeOpacity: 1.0,
+         strokeWeight: 2
+      });
+
+      trajet.setMap(map);
+   }
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmtaQUZuwVQLHpWIx-ry3HmGHnyL2Dkms&callback=initMap"></script>
 </body>
 
 
-<?php
-      include('footer.php');
-      //<!-- .navbar -->
-      ?>
+ 
+<?php include('footer.php'); ?>
 </html>
