@@ -5,7 +5,7 @@
         <li><a href="index.php">Home</a></li>
         <li><a href="compagnie.php">Compagnie</a></li>
             <li><a href="profil.php">profil</a></li>
-            <li><a href="rechercheTrajet.php">Recherche Trajets</a></li>
+            <li><a href="RechercheTrajet.php">Recherche Trajets</a></li>
             <li><a href="#"  onclick="confirmLogout()">Déconnexion</a></li>
 
                     <script>
