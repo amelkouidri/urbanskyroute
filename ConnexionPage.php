@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style1.css"> 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.4.2/zxcvbn.js"></script>
-    <script src="script.js"></script>
+    
 	<style>
 	body {
     background: url('Capture3.PNG') no-repeat center;
@@ -39,9 +39,7 @@
                         <input type="button" class="button login-btn" value="Sign In">
                     </div>
                     <div class="hr"></div>
-                    <div class="foot-lnk">
-                        <a href="#forgot">Forgot Password?</a>
-                    </div>
+                    
                 </div>
                 <div class="sign-up-htm">
                     <div class="group">
@@ -73,142 +71,150 @@
         </div>
     </div>
     <!-- Script jQuery -->
-<script>
-    $(document).ready(function () {
-        $(".login-btn").click(function () {
-            var username = $("#user").val();
-            var password = $("#pass").val();
+    <script>
+function handleAjaxResponse(data, username) {
 
-            if (username.trim() === "") {
-                $("#user").css("border", "2px solid red");
-                alert("Veuillez remplir tous les champs.");
-                return;
+
+
+    if (data === "Inscription réussie" || data === "Connexion réussie") {
+        vérifierRole(username);
+    } else {
+        alert(data);
+    }
+}
+
+function sendAjaxRequest(url, data, successCallback) {
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                successCallback(xhr.responseText);
+            } else {
+                alert("Erreur lors de la requête Ajax");
             }
+        }
+    };
 
-            if (password.trim() === "") {
-                $("#pass").css("border", "2px solid red");
-                alert("Veuillez remplir tous les champs.");
-                return;
-            }
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.send(data);
+}
 
-            $.ajax({
-                type: "POST",
-                url: "connexion.php",
-                data: { user: username, pass: password },
-                success: function (data) {
-                    console.log(data);
-                    $("#user, #pass").css("border", "1px solid #ccc");
-
-                    if (data === "Connexion réussie") {
-                        // Vérification du rôle ici
-                        vérifierRole(username);
-                    } else {
-                        alert("Nom d'utilisateur ou mot de passe incorrect.");
-                    }
-                },
-                error: function () {
-                    alert("Erreur lors de la requête Ajax");
+function vérifierRole(username) {
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                var roleData = xhr.responseText;
+                if (roleData === "user") {
+                    window.location.href = "index-2.php";
+                } else if (roleData === "admin") {
+                    window.location.href = "index3.php";
+                } else {
+                    alert("Rôle non reconnu");
                 }
-            });
-        });
-
-        $(".signup-btn").click(function () {
-            var username = $("#user-signup").val();
-            var password = $("#pass-signup").val();
-            var repeatPassword = $("#pass-repeat").val();
-            var email = $("#email").val();
-            var usernameRegex = /^[a-zA-Z0-9_-]{3,16}$/;
-            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-            if (username.trim() === "" || password.trim() === "" || repeatPassword.trim() === "" || email.trim() === "") {
-                $("#user-signup, #pass-signup, #pass-repeat, #email").css("border", "2px solid red");
-                alert("Veuillez remplir tous les champs.");
-                return;
+            } else {
+                alert("Erreur lors de la requête Ajax pour vérifier le rôle");
             }
+        }
+    };
 
-            if (password !== repeatPassword) {
-                $("#pass-signup, #pass-repeat").css("border", "2px solid red");
-                alert("Les mots de passe ne correspondent pas.");
-                return;
-            }
+    xhr.open("POST", "verifier_role.php", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.send("user=" + encodeURIComponent(username));
+}
 
-            if (!usernameRegex.test(username)) {
-                $("#user-signup").css("border", "2px solid red");
-                alert("Le nom d'utilisateur doit être alphanumérique, avec des underscores ou des tirets, et avoir une longueur de 3 à 16 caractères.");
-                return;
-            }
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelector(".login-btn").addEventListener("click", function () {
+        var username = document.getElementById("user").value;
+        var password = document.getElementById("pass").value;
 
-            if (!emailRegex.test(email)) {
-                $("#email").css("border", "2px solid red");
-                alert("Veuillez entrer une adresse e-mail valide.");
-                return;
-            }
-
-            $.ajax({
-                type: "POST",
-                url: "inscription.php",
-                data: { user: username, pass: password, email: email },
-                success: function (data) {
-                    $("#user-signup, #pass-signup, #pass-repeat, #email").css("border", "1px solid #ccc");
-
-                    if (data === "Inscription réussie") {
-                        // Vérification du rôle ici
-                        vérifierRole(username);
-                    } else {
-                        alert(data);
-                    }
-                },
-                error: function () {
-                    alert("Erreur lors de la requête Ajax");
-                }
-            });
-        });
-
-        function vérifierRole(username) {
-            $.ajax({
-                type: "POST",
-                url: "verifier_role.php",
-                data: { user: username },
-                success: function (roleData) {
-                    if (roleData === "user") {
-                        window.location.href = "index-2.php";
-                    } else if (roleData === "admin") {
-                        window.location.href = "index3.php";
-                    } else {
-                        alert("Rôle non reconnu");
-                    }
-                },
-                error: function () {
-                    alert("Erreur lors de la requête Ajax pour vérifier le rôle");
-                }
-            });
+        if (username.trim() === "" || password.trim() === "") {
+            document.getElementById("user").style.border = "2px solid red";
+            document.getElementById("pass").style.border = "2px solid red";
+            alert("Veuillez remplir tous les champs.");
+            return;
         }
 
-        $("#pass-signup").on("input", function () {
-            var password = $(this).val();
-            var result = zxcvbn(password);
+        var data = "user=" + encodeURIComponent(username) + "&pass=" + encodeURIComponent(password);
 
-            switch (result.score) {
-                case 0:
-                case 1:
-                    $("#password-strength").text("Faible");
-                    break;
-                case 2:
-                    $("#password-strength").text("Moyen");
-                    break;
-                case 3:
-                case 4:
-                    $("#password-strength").text("Fort");
-                    break;
-                default:
-                    $("#password-strength").text("");
-            }
-        });
-
-        $("#user, #pass, #user-signup, #pass-signup, #pass-repeat, #email").on("input", function () {
-            $(this).css("border", "1px solid #ccc");
+        sendAjaxRequest("Connexion.php", data, function(data) {
+            handleAjaxResponse(data, username);
         });
     });
+
+    document.querySelector(".signup-btn").addEventListener("click", function () {
+        var username = document.getElementById("user-signup").value;
+        var password = document.getElementById("pass-signup").value;
+        var repeatPassword = document.getElementById("pass-repeat").value;
+        var email = document.getElementById("email").value;
+        var usernameRegex = /^[a-zA-Z0-9_-]{3,16}$/;
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (username.trim() === "" || password.trim() === "" || repeatPassword.trim() === "" || email.trim() === "") {
+            document.getElementById("user-signup").style.border = "2px solid red";
+            document.getElementById("pass-signup").style.border = "2px solid red";
+            document.getElementById("pass-repeat").style.border = "2px solid red";
+            document.getElementById("email").style.border = "2px solid red";
+            alert("Veuillez remplir tous les champs.");
+            return;
+        }
+
+        if (password !== repeatPassword) {
+            document.getElementById("pass-signup").style.border = "2px solid red";
+            document.getElementById("pass-repeat").style.border = "2px solid red";
+            alert("Les mots de passe ne correspondent pas.");
+            return;
+        }
+
+        if (!usernameRegex.test(username)) {
+            document.getElementById("user-signup").style.border = "2px solid red";
+            alert("Le nom d'utilisateur doit être alphanumérique, avec des underscores ou des tirets, et avoir une longueur de 3 à 16 caractères.");
+            return;
+        }
+
+        if (!emailRegex.test(email)) {
+            document.getElementById("email").style.border = "2px solid red";
+            alert("Veuillez entrer une adresse e-mail valide.");
+            return;
+        }
+
+        var data = "user=" + encodeURIComponent(username) + "&pass=" + encodeURIComponent(password) + "&email=" + encodeURIComponent(email);
+
+        sendAjaxRequest("inscription.php", data, function(data) {
+            handleAjaxResponse(data, username);
+        });
+    });
+
+    document.getElementById("pass-signup").addEventListener("input", function () {
+        var password = this.value;
+        var result = zxcvbn(password);
+
+        switch (result.score) {
+            case 0:
+            case 1:
+                document.getElementById("password-strength").textContent = "Faible";
+                break;
+            case 2:
+                document.getElementById("password-strength").textContent = "Moyen";
+                break;
+            case 3:
+            case 4:
+                document.getElementById("password-strength").textContent = "Fort";
+                break;
+            default:
+                document.getElementById("password-strength").textContent = "";
+        }
+    });
+
+    var inputElements = document.querySelectorAll("#user, #pass, #user-signup, #pass-signup, #pass-repeat, #email");
+    inputElements.forEach(function (element) {
+        element.addEventListener("input", function () {
+            this.style.border = "1px solid #ccc";
+        });
+    });
+});
 </script>
+
 </body>
 </html>
