@@ -148,7 +148,7 @@
         }
 
         .map {
-            height: 400px;
+            height: 500px;
             width: 100%;
         }
     </style>
@@ -219,11 +219,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $wilayato = $wilayatoRow['id'];
 
                 $directQuery = "SELECT t.id_trajet, p.id_compagnie FROM trajet t
-                                INNER JOIN propose p ON t.id_trajet = p.id_trajet
-                                WHERE t.wilaya_depart_id = $wilayafrom AND t.wilaya_arrivee_id = $wilayato";
+                INNER JOIN propose p ON t.id_trajet = p.id_trajet
+                WHERE t.wilaya_depart_id = $wilayafrom AND t.wilaya_arrivee_id = $wilayato AND t.date = '$date'";
+
+
                 $resultDirect = $connexion->query($directQuery);
 
                 if ($resultDirect->num_rows > 0) {
+                    
                     $rowDirect = $resultDirect->fetch_assoc();
                     $idTrajetDirect = $rowDirect['id_trajet'];
                     $idCompagnieDirect = $rowDirect['id_compagnie'];
@@ -232,40 +235,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     afficherEtape($wilayafrom, $idCompagnieDirect, $wilayato);
                 } else {
-                    function trouverTrajets($wilayaActuelle, $wilayato, $cheminActuel, $wilayasIntermediaires) {
+                    function trouverTrajets($wilayaActuelle, $wilayato, $cheminActuel, $wilayasIntermediaires , $date_trajet) {
                         global $connexion;
-                        $correspondanceQuery = "SELECT * FROM trajet WHERE wilaya_depart_id = $wilayaActuelle";
+                        $correspondanceQuery = "SELECT * FROM trajet WHERE wilaya_depart_id = $wilayaActuelle AND date = '$date_trajet'";
                         $resultCorrespondance = $connexion->query($correspondanceQuery);
 
                         if ($resultCorrespondance) {
+                            
                             while ($rowCorrespondance = $resultCorrespondance->fetch_assoc()) {
                                 $idWilayaArriveeCorrespondance = $rowCorrespondance['wilaya_arrivee_id'];
                                 $idTrajetCorrespondance = $rowCorrespondance['id_trajet'];
-                                $possedQuery = "SELECT id_compagnie FROM propose WHERE id_trajet = $idTrajetCorrespondance";
-                                $resultPossed = $connexion->query($possedQuery);
-
-                                if ($resultPossed->num_rows > 0) {
-                                    $rowPossed = $resultPossed->fetch_assoc();
-                                    $idCompagnieCorrespondance = $rowPossed['id_compagnie'];
-                                    $nouveauChemin = $cheminActuel;
-                                    $nouveauChemin[] = array(
-                                        'wilayaFrom' => $wilayaActuelle,
-                                        'compagnie' => $idCompagnieCorrespondance,
-                                        'wilayaTo' => $idWilayaArriveeCorrespondance
-                                    );
-
-                                    if ($idWilayaArriveeCorrespondance == $wilayato) {
-                                        $wilayasIntermediaires[] = $nouveauChemin;
-                                    } else {
-                                        $wilayasIntermediaires = trouverTrajets($idWilayaArriveeCorrespondance, $wilayato, $nouveauChemin, $wilayasIntermediaires);
+                                $dateTrajetCorrespondance = $rowCorrespondance['date']; 
+                                
+                        $date1 = new DateTime($dateTrajetCorrespondance);
+                        $date2 =  new DateTime($date_trajet);
+                                if ($date2 <= $date1) {
+                        
+                                    $possedQuery = "SELECT id_compagnie FROM propose WHERE id_trajet = $idTrajetCorrespondance";
+                                    $resultPossed = $connexion->query($possedQuery);
+                                
+                                    if ($resultPossed->num_rows > 0) {
+                                        $rowPossed = $resultPossed->fetch_assoc();
+                                        $idCompagnieCorrespondance = $rowPossed['id_compagnie'];
+                                        $nouveauChemin = $cheminActuel;
+                                        $nouveauChemin[] = array(
+                                            'wilayaFrom' => $wilayaActuelle,
+                                            'compagnie' => $idCompagnieCorrespondance,
+                                            'wilayaTo' => $idWilayaArriveeCorrespondance,
+                                            'date' => $dateTrajetCorrespondance
+                                        );                                        
+                                        if ($idWilayaArriveeCorrespondance == $wilayato) {
+                                            $wilayasIntermediaires[] = $nouveauChemin;
+                                        } else {
+                                            $wilayasIntermediaires = trouverTrajets($idWilayaArriveeCorrespondance, $wilayato, $nouveauChemin, $wilayasIntermediaires, $date_trajet);
+                                        }
                                     }
                                 }
                             }
                         }
+                    
                         return $wilayasIntermediaires;
                     }
 
-                    $wilayasIntermediaires = trouverTrajets($wilayafrom, $wilayato, array(), array());
+                    $wilayasIntermediaires = trouverTrajets($wilayafrom, $wilayato, array(), array(),$date);
+
 
                     if (!empty($wilayasIntermediaires)) {
                         echo "Trajets intermédiaires trouvés :<br>";
@@ -276,7 +289,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             echo "<br>";
                         }
                     } else {
-                        echo "Aucun trajet intermédiaire trouvé.";
+                        echo "Aucun trajet trouvé pour cette date .";
                     }
                 }
             }
@@ -331,7 +344,7 @@ foreach ($wilayasIntermediaires as $chemin) {
         $wilayaTo = $etape['wilayaTo'];
         $query = "SELECT 
         t.heure_depart, t.heure_arrivee, t.wilaya_depart_id, t.wilaya_arrivee_id,
-        p.id_compagnie, p.id_transport,
+        p.id_compagnie, p.id_transport,t.date ,
         comp.nom_compagnie AS compagnie_nom,
         comp.logo AS compagnie_logo,  
         trans.type_transport, trans.nombre_passager
@@ -352,6 +365,7 @@ foreach ($wilayasIntermediaires as $chemin) {
             echo "<h3>{$row['compagnie_nom']}</h3>";
             echo '<p class="fst-italic">Description de l\'étape</p>';
             echo '<ul>';
+            echo "<li><i class=\"bi bi-check\"></i> date du vol : {$row['date']}</li>";
             echo "<li><i class=\"bi bi-check\"></i> Heure de départ : {$row['heure_depart']}</li>";
             echo "<li><i class=\"bi bi-check\"></i> Heure d'arrivée : {$row['heure_arrivee']}</li>";
             echo "<li><i class=\"bi bi-check\"></i> Type de transport : {$row['type_transport']}</li>";
@@ -456,8 +470,6 @@ if ($resultLngTo) {
     var depart = { lat: <?php echo $latFrom; ?>, lng: <?php echo $lngFrom; ?> };
 var arrivee = { lat: <?php echo $latTo; ?>, lng: <?php echo $lngTo; ?> };
 
-console.log("Coordonnées de départ :", depart.lat, depart.lng);
-console.log("Coordonnées d'arrivée :", arrivee.lat, arrivee.lng);
 
       var map = new google.maps.Map(document.getElementById('map'), {
          zoom: 5,
