@@ -365,7 +365,6 @@ foreach ($wilayasIntermediaires as $chemin) {
             echo "<h3>{$row['compagnie_nom']}</h3>";
             echo '<p class="fst-italic">Description de l\'étape</p>';
             echo '<ul>';
-            echo "<li><i class=\"bi bi-check\"></i> date du vol : {$row['date']}</li>";
             echo "<li><i class=\"bi bi-check\"></i> Heure de départ : {$row['heure_depart']}</li>";
             echo "<li><i class=\"bi bi-check\"></i> Heure d'arrivée : {$row['heure_arrivee']}</li>";
             echo "<li><i class=\"bi bi-check\"></i> Type de transport : {$row['type_transport']}</li>";
